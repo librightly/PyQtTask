@@ -1,0 +1,3 @@
+{
+    "files": ["DlgEditStatus_C.py","MainMileStoneItem.py","DlgEditText_C.py","File_EXCEL.py","WorkStep.py","DataReleasePlan.py","SEProblemSet.py","WorkFlow.py","DlgEditText.ui","pyqttask.py","MainMileStone.py","OverviewSheetEXCEL.py","Task.py","pyqtmed_se.py","LDatetime.py","SEProblem.py","FormSE.py","File.py","DlgEditText.py","FormSE.ui","mainwindow.ui","DlgEditStatus.ui","DlgEditStatus.py","WorkFlowItem.py","DataReleasePlanItem.py","mainwindow.py","Project.py","SESheetPPT.py","Topic.py","TaskEXECL.py","dialog_seoverview.ui"]
+}

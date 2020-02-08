@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1016</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>PyQtTask</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
+      <item row="1" column="1">
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <attribute name="verticalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="2">
+       <widget class="QTreeWidget" name="treeWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
+        <column>
+         <property name="text">
+          <string notr="true">1</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1016</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="actionNewTask"/>
+    <addaction name="actionImportSEPPTs"/>
+    <addaction name="actionExportSEtoExcel"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Option">
+    <property name="title">
+     <string>选项</string>
+    </property>
+    <addaction name="actionSetupDefaultFile"/>
+   </widget>
+   <widget class="QMenu" name="menu_Show">
+    <property name="title">
+     <string>显示</string>
+    </property>
+    <addaction name="actionRefresh"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowTask"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowAllWorkFlow"/>
+    <addaction name="actionShowAllWorkFlowOpened"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowAllMainstone"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowAllDataReleasePlan"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowAllSEProblem"/>
+    <addaction name="actionShowAllSEProblemOpened"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Show"/>
+   <addaction name="menu_Option"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNewTask">
+   <property name="text">
+    <string>NewTask</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionSetupDefaultFile">
+   <property name="text">
+    <string>SetupDefaultFile</string>
+   </property>
+  </action>
+  <action name="actionShowTask">
+   <property name="text">
+    <string>ShowTask</string>
+   </property>
+  </action>
+  <action name="actionShowAllWorkFlow">
+   <property name="text">
+    <string>ShowAllWorkFlow</string>
+   </property>
+  </action>
+  <action name="actionShowAllMainstone">
+   <property name="text">
+    <string>ShowAllMainstone</string>
+   </property>
+  </action>
+  <action name="actionShowAllDataReleasePlan">
+   <property name="text">
+    <string>ShowAllDataReleasePlan</string>
+   </property>
+  </action>
+  <action name="actionShowAllWorkFlowOpened">
+   <property name="text">
+    <string>ShowAllWorkFlowOpened</string>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+  </action>
+  <action name="actionShowAllSEProblem">
+   <property name="text">
+    <string>ShowAllSEProblem</string>
+   </property>
+  </action>
+  <action name="actionShowAllSEProblemOpened">
+   <property name="text">
+    <string>ShowAllSEProblemOpened</string>
+   </property>
+  </action>
+  <action name="actionImportSEPPTs">
+   <property name="text">
+    <string>ImportSEPPTs</string>
+   </property>
+  </action>
+  <action name="actionExportSEtoExcel">
+   <property name="text">
+    <string>ExportSEtoExcel</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
