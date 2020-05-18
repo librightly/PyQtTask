@@ -54,8 +54,8 @@ class SEProblemSet(Topic):
             elif 3 == problem.risk:
                 self.num_risk['low'] += 1
             else:
-                strErrorLog = "error 风险状态 of problem " + problem.index + ".\n"
-                QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No)
+                strErrorLog = "error 问题风险 of problem of " + problem.project + problem.index + ".\n"
+                QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No) 
                 return False
                 
             if "1" == problem.status:
@@ -71,8 +71,8 @@ class SEProblemSet(Topic):
             elif "6" == problem.status:
                 self.num_status['close'] += 1
             else:
-                strErrorLog = "error 问题状态 of problem " + problem.index + ".\n"
-                QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No)
+                strErrorLog = "error 问题状态 of problem of " + problem.project + problem.index + ".\n"
+                QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No) 
                 return False
 
             if '造型' == problem.area_division:
@@ -96,8 +96,8 @@ class SEProblemSet(Topic):
             elif '测量方案' == problem.area_division:
                 self.num_division['测量方案'] += 1
             else:
-                strErrorLog = "error 专业区域 of problem " + problem.index + ".\n"
-                QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No)
+                strErrorLog = "error 专业区域 of problem of " + problem.project + problem.index + ".\n"
+                QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No) 
                 return False
                 
         self.sum = self.num_risk['high'] + self.num_risk['middle'] + self.num_risk['low']

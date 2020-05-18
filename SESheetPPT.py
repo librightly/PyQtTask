@@ -40,11 +40,6 @@ class SESheetPPT(File):
         
         #读取问题单首页信息
         head_slide = prs.slides[0]
-        #QMessageBox.information(None,'消息',str(len(prs.slides)),QMessageBox.Yes | QMessageBox.No)
-        '''if len(prs.slides) ！= 3:
-            strErrorLog += "SE问题PPT《"
-            strErrorLog += strPPTName
-            strErrorLog += "》首页格式有误！\n"'''
         for shape in head_slide.shapes:
             if shape.has_text_frame:
                 strPPTName = str(shape.text)                
@@ -54,8 +49,8 @@ class SESheetPPT(File):
                         self.project_id = strPPTNameList[0]
                         self.name = strPPTNameList[1]
                     else:
-                        strErrorLog = "SE问题PPT《" + strPPTName + "》文件名格式有误！\n"
-                        QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No)
+                        strErrorLog = "《" + strPPTName + "》文件名格式有误！\n"
+                        QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No) 
                         return False
                 elif len(strPPTName) == 4:
                     self.version = strPPTName
@@ -64,25 +59,24 @@ class SESheetPPT(File):
                     continue
             else:
                 continue
-
-        #self.project_id = self.project_id[0,self.project_id.count()-2]        
-        #遍历Slides
-        for i in range(1,len(prs.slides)):
-            slide = prs.slides[i]
-            #获取Slide版式id
-            #slide_layout = slide.slide_layout
-            index = slide_layouts.index(slide.slide_layout)
-            #判断Slide是否是问题单页版式
-            if index >= 1 and index <= 3:
-                #读取问题单页信息
-                problem = SEProblem()
-                #将此问题放置在问题集合尾端
-                self.problem_set.append(problem)
-                #遍历Slide内Shapes
-                for j in range(0,len(slide.shapes)):
-                    shape = slide.shapes[j]
-                    if shape.has_table:  #读取表格内文字内容
-                        if self.version == "V1.0":
+    
+        #遍历Slides        
+        if self.version == "V1.0":
+            for i in range(1,len(prs.slides)):
+                slide = prs.slides[i]
+                #获取Slide版式id
+                index = slide_layouts.index(slide.slide_layout)
+                #判断Slide是否是问题单页版式
+                if index >= 1 and index <= 3:
+                    #读取问题单页信息
+                    problem = SEProblem()
+                    #将此问题放置在问题集合尾端
+                    self.problem_set.append(problem)
+                    #遍历Slide内Shapes
+                    for j in range(0,len(slide.shapes)):
+                        shape = slide.shapes[j]
+                        #读取表格内文字内容
+                        if shape.has_table:
                             table = shape.table
                             problem.project = self.project_id
                             problem.index = self.name + '-' + table.cell(1,0).text
@@ -117,7 +111,39 @@ class SESheetPPT(File):
                             problem.date_planed.fromString(table.cell(11,10).text,True)
                             #problem.date_followed.fromString(table.cell(13,10).text,False)
                             problem.date_closed.fromString(table.cell(16,10).text,False)
-                        elif self.version == "V2.0":
+
+                            #将V1.0版本中问题状态进行转化为V2.0
+                            if problem.status == "4":
+                                problem.status = "6"
+                            elif problem.status == "3":
+                                problem.status = "5"
+                            elif problem.status == "2":
+                                problem.status = "4"
+                            elif problem.status == "1":
+                                problem.status = "2"
+                            elif problem.status == "0":
+                                problem.status = "1"
+                            else:
+                                strErrorLog = "《" + strPPTName + "》问题#" + str(problem.index) + "状态有误！\n"
+                                QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No) 
+                else: continue
+                proressBar.setValue(i)
+        elif (self.version == "V2.0") | (self.version == "V2.2") | (self.version == "V2.3"):
+            for i in range(1,len(prs.slides)):
+                slide = prs.slides[i]
+                #获取Slide版式id
+                index = slide_layouts.index(slide.slide_layout)
+                #判断Slide是否是问题单页版式
+                if index >= 1 and index <= 3:
+                    #读取问题单页信息
+                    problem = SEProblem()
+                    #将此问题放置在问题集合尾端
+                    self.problem_set.append(problem)
+                    #遍历Slide内Shapes
+                    for j in range(0,len(slide.shapes)):
+                        shape = slide.shapes[j]
+                        #读取表格内文字内容
+                        if shape.has_table:
                             table = shape.table
                             problem.project = self.project_id
                             problem.index = self.name + '-' + table.cell(1,0).text
@@ -134,13 +160,13 @@ class SESheetPPT(File):
                             problem.stakeholder = table.cell(8,13).text
                             problem.status = table.cell(3,13).text
                             problem.version_start_1 = table.cell(12,4).text
-                            problem.version_end_1 = table.cell(12,8).text
+                            problem.version_end_1 = table.cell(12,9).text
                             problem.version_start_2 = table.cell(13,4).text
-                            problem.version_end_2 = table.cell(13,8).text
+                            problem.version_end_2 = table.cell(13,9).text
                             problem.version_start_3 = table.cell(14,4).text
-                            problem.version_end_3 = table.cell(14,8).text
+                            problem.version_end_3 = table.cell(14,9).text
                             problem.version_start_4 = table.cell(15,4).text
-                            problem.version_end_4 = table.cell(15,8).text
+                            problem.version_end_4 = table.cell(15,9).text
                             problem.LLR = table.cell(16,6).text
                             problem.stlye_LLR = table.cell(16,10).text
                             problem.update_MR = table.cell(16,14).text
@@ -153,15 +179,68 @@ class SESheetPPT(File):
                             problem.date_created.fromString(table.cell(1,2).text,True)
                             problem.date_planed.fromString(table.cell(10,13).text,True)
                             problem.date_closed.fromString(table.cell(12,13).text,False)
-                        else:
-                            strErrorLog = "SE问题PPT《" + strPPTName + "》问题单版本号有误！\n"
-                            QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No)
-                            return False
-            else: continue
-            proressBar.setValue(i)
+                else: continue
+                proressBar.setValue(i)
+        elif self.version == "V2.4": 
+            for i in range(1,len(prs.slides)):
+                slide = prs.slides[i]
+                #获取Slide版式id
+                index = slide_layouts.index(slide.slide_layout)
+                #判断Slide是否是问题单页版式
+                if index >= 1 and index <= 3:
+                    #读取问题单页信息
+                    problem = SEProblem()
+                    #将此问题放置在问题集合尾端
+                    self.problem_set.append(problem)
+                    #遍历Slide内Shapes
+                    for j in range(0,len(slide.shapes)):
+                        shape = slide.shapes[j]
+                        #读取表格内文字内容
+                        if shape.has_table:
+                            table = shape.table
+                            problem.project = self.project_id
+                            problem.index = self.name + '-' + table.cell(1,0).text
+                            problem.creater = table.cell(1,1).text
+                            problem.area_product = table.cell(1,3).text
+                            problem.area_division = table.cell(1,5).text
+                            problem.MIR_id = table.cell(1,7).text
+                            problem.MR_id = table.cell(1,11).text
+                            problem.style_SE = table.cell(1,13).text
+                            problem.brief_and_reason = table.cell(3,0).text
+                            problem.suggestion = table.cell(6,0).text
+                            problem.detail_and_progress = table.cell(3,4).text
+                            problem.prevention_and_result = table.cell(10,4).text
+                            problem.stakeholder = table.cell(8,13).text
+                            problem.status = table.cell(3,13).text
+                            problem.version_start_1 = table.cell(12,4).text
+                            problem.version_end_1 = table.cell(12,9).text
+                            problem.version_start_2 = table.cell(13,4).text
+                            problem.version_end_2 = table.cell(13,9).text
+                            problem.version_start_3 = table.cell(14,4).text
+                            problem.version_end_3 = table.cell(14,9).text
+                            problem.version_start_4 = table.cell(15,4).text
+                            problem.version_end_4 = table.cell(15,9).text
+                            problem.LLR = table.cell(16,6).text
+                            problem.stlye_LLR = table.cell(16,10).text
+                            problem.update_MR = table.cell(16,14).text
+                            problem.EPorPPV = table.cell(15,13).text
+                            problem.note = table.cell(17,6).text
+                            problem.EWO_id = table.cell(17,14).text
+
+                            problem.risk = index
+
+                            #获取表格内时间
+                            problem.date_created.fromString(table.cell(1,2).text,True)
+                            problem.date_planed.fromString(table.cell(10,13).text,True)
+                            problem.date_closed.fromString(table.cell(12,13).text,False)
+                else: continue
+                proressBar.setValue(i)
+        else:
+            strErrorLog = "PPT《" + strPPTName + "》问题单版本号有误！\n"
+            QMessageBox.information(None,'消息',strErrorLog,QMessageBox.Yes | QMessageBox.No) 
+            return False
+
         proressBar.setValue(len(prs.slides))
-        self.isread = True
-        
+        self.isread = True        
         #计算问题总数
-        self.problem_set.analysis(strErrorLog)
-        return True
+        return self.problem_set.analysis(strErrorLog)

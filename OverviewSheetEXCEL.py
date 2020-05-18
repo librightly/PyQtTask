@@ -33,17 +33,20 @@ class OverveiwSheetEXCEL(File_EXCEL):
         '''初始化SE问题清单页'''
         ws = self.workbook.active
         ws.title = "同步工程问题清单"
+        the_row = 1
+        the_column = 1 
         #写问题表页标题
         if style:
             ws.row_dimensions[1].height = 50
             ws.cell(row=1, column=2, value="同步工程问题清单")
-            ws.merge_cells('B1:T1')
-            the_row = 2
-        else:
-            the_row = 1
+            ws.merge_cells('B1:AE1')
+            the_row += 1
+        #else:
+            #the_row = 1
 
-        #初始化问题表页标题行与列
-        the_column = 1        
+        #初始化问题表页标题行与列 
+        #设置问题表页标题行行高
+        ws.row_dimensions[the_row].height = 30              
         if not style:
             ws.cell(row=the_row, column=the_column, value="项目")
             ws.column_dimensions['A'].width = 20
@@ -64,13 +67,16 @@ class OverveiwSheetEXCEL(File_EXCEL):
         the_column += 1
         ws.cell(row=the_row, column=the_column, value="状态")
         ws.column_dimensions['F'].width = 10
-        if self.version == "V2.0":
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="MIR")
+        ws.column_dimensions['G'].width = 10
+        '''if self.version == "V2.0":
             the_column += 1
             ws.cell(row=the_row, column=the_column, value="MIR")
             ws.column_dimensions['G'].width = 10
         else:
             the_column += 1
-            ws.column_dimensions['G'].width = 0
+            ws.column_dimensions['G'].width = 0'''
         the_column += 1
         ws.cell(row=the_row, column=the_column, value="干系人")
         ws.column_dimensions['H'].width = 20
@@ -90,30 +96,59 @@ class OverveiwSheetEXCEL(File_EXCEL):
         ws.cell(row=the_row, column=the_column, value="专业区域")
         ws.column_dimensions['M'].width = 20
         the_column += 1
-        if self.version == "V2.0":
-            ws.cell(row=the_row, column=the_column, value="问题类型")
-            ws.column_dimensions['N'].width = 20
-            the_column += 1
-            ws.cell(row=the_row, column=the_column, value="相关MR索引")
-            ws.column_dimensions['O'].width = 20
-            the_column += 1
-            ws.cell(row=the_row, column=the_column, value="是否EP/PPV验证")
-            ws.column_dimensions['P'].width = 20
-            the_column += 1
-            ws.cell(row=the_row, column=the_column, value="是否触发LLR")
-            ws.column_dimensions['Q'].width = 20
-            the_column += 1
-            ws.cell(row=the_row, column=the_column, value="触发类型")
-            ws.column_dimensions['R'].width = 20
-            the_column += 1
-            ws.cell(row=the_row, column=the_column, value="是否更新MR")
-            ws.column_dimensions['S'].width = 20
-            the_column += 1
-            ws.cell(row=the_row, column=the_column, value="备注")
-            ws.column_dimensions['T'].width = 40
-
-        #设置问题表页标题行行高
-        ws.row_dimensions[the_row].height = 30
+        ws.cell(row=the_row, column=the_column, value="问题类型")
+        ws.column_dimensions['N'].width = 20
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="相关MR索引")
+        ws.column_dimensions['O'].width = 20
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="是否EP/PPV验证")
+        ws.column_dimensions['P'].width = 20
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="是否触发LLR")
+        ws.column_dimensions['Q'].width = 20
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="触发类型")
+        ws.column_dimensions['R'].width = 20
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="是否更新MR")
+        ws.column_dimensions['S'].width = 20
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="创建者")
+        ws.column_dimensions['T'].width = 20
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（发生时）-1")
+        ws.column_dimensions['U'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（解决时）-1")
+        ws.column_dimensions['V'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（发生时）-2")
+        ws.column_dimensions['W'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（解决时）-2")
+        ws.column_dimensions['X'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（发生时）-3")
+        ws.column_dimensions['Y'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（解决时）-3")
+        ws.column_dimensions['Z'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（发生时）-4")
+        ws.column_dimensions['AA'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="零件号&版本（解决时）-4")
+        ws.column_dimensions['AB'].width = 35
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="EWO号")
+        ws.column_dimensions['AC'].width = 20    
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="预防措施or验证结果")
+        ws.column_dimensions['AD'].width = 40         
+        the_column += 1
+        ws.cell(row=the_row, column=the_column, value="备注")
+        ws.column_dimensions['AE'].width = 40    
         
         #设置问题表页标题行样式
         cellStyle.set_as_sheet_title()
@@ -126,7 +161,7 @@ class OverveiwSheetEXCEL(File_EXCEL):
         else:
             the_row = 1
         cellStyle.set_as_title()
-        for y in range(1,21):
+        for y in range(1,32):
             cell = ws.cell(row=the_row, column=y)
             cell.font = cellStyle.font
             cell.alignment = cellStyle.alignment
@@ -232,9 +267,11 @@ class OverveiwSheetEXCEL(File_EXCEL):
             ws.cell(row=row_now, column=the_column, value=problem.detail_and_progress)
             the_column += 1
             ws.cell(row=row_now, column=the_column, value=problem.status)
-            if self.version == "V2.0":
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.MIR_id)
+            '''if self.version == "V2.0":
                 the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.MIR_id)
+                ws.cell(row=row_now, column=the_column, value=problem.MIR_id)'''
             the_column += 1
             ws.cell(row=row_now, column=the_column, value=problem.stakeholder)
             the_column += 1
@@ -247,21 +284,42 @@ class OverveiwSheetEXCEL(File_EXCEL):
             ws.cell(row=row_now, column=the_column, value=problem.area_product)
             the_column += 1
             ws.cell(row=row_now, column=the_column, value=problem.area_division)
-            if self.version == "V2.0":
-                the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.style_SE)
-                the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.MR_id)
-                the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.EPorPPV)
-                the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.LLR)
-                the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.stlye_LLR)
-                the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.update_MR)
-                the_column += 1
-                ws.cell(row=row_now, column=the_column, value=problem.note)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.style_SE)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.MR_id)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.EPorPPV)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.LLR)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.stlye_LLR)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.update_MR)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.creater)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_start_1)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_end_1)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_start_2)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_end_2)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_start_3)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_end_3)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_start_4)
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.version_end_4)  
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.EWO_id)  
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.prevention_and_result)                    
+            the_column += 1
+            ws.cell(row=row_now, column=the_column, value=problem.note)
 
             #设置数据行样式
             #项目号  问题序号
@@ -295,28 +353,20 @@ class OverveiwSheetEXCEL(File_EXCEL):
             cell.alignment = cellStyle.alignment
             cell.border = cellStyle.border
 
-            #设置MIR列单元格格式
-            if self.version == "V2.0":
-                cell = ws.cell(row=row_now, column=7)
-                cellStyle.set_as_text_in_center()
-                cell.font = cellStyle.font
-                cell.alignment = cellStyle.alignment
-                cell.border = cellStyle.border
-
-            #设置干系人 创建时间 计划关闭时间 实际关闭时间 产品区域 专业区域列单元格格式
-            for y in range(8,14):
+            cellStyle.set_as_text_in_center()
+            for y in range(7,30):
                 cell = ws.cell(row=row_now, column=y)
                 cell.font = cellStyle.font
                 cell.alignment = cellStyle.alignment
                 cell.border = cellStyle.border
 
-            #设置问题类型 相关MR索引 是否EP/PPV验证 是否触发LLR 触发类型 是否更新MR列单元格格式
-            if self.version == "V2.0":
-                for y in range(14,21):
-                    cell = ws.cell(row=row_now, column=y)
-                    cell.font = cellStyle.font
-                    cell.alignment = cellStyle.alignment
-                    cell.border = cellStyle.border
+            #设置验证列、备注列单元格格式
+            for y in range(30,32):
+                cell = ws.cell(row=row_now, column=y)   
+                cellStyle.set_as_text_in_left()         
+                cell.font = cellStyle.font
+                cell.alignment = cellStyle.alignment
+                cell.border = cellStyle.border             
 
             #移动至下一行
             row_now += 1

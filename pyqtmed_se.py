@@ -29,19 +29,20 @@ class PyQtMED(QMainWindow, Ui_SAIC_MED):
         """SE问题单list"""
         self.SEPPTList = list()
         self.SEOverview = OverveiwSheetEXCEL()        
-        self.version = 0.3  #版本信息
+        self.version = 0.4  #版本信息
         self.strErrorLog = ""  #错误日志字符串
         #初始化程序
         self.initial_information()
 
     """初始化窗口信息"""
     def initial_information(self):
-        self.SEOverview.version = "V2.0"
+        self.SEOverview.version = "V2.4"
         #显示版本号
         str_version = "版本号为：V" + str(self.version) + ".    " + "SE 问题单版本号为：" + self.SEOverview.version
         self.label_Version.setText(str_version)
         #显示log
         self.listWidget_verLog.clear()
+        self.listWidget_verLog.addItem("V0.4:解决日期格带空格程序自动关闭的问题。新增PPT中未写入Excel中的内容。")
         self.listWidget_verLog.addItem("V0.3:按照部门要求更新问题单格式至V2.0版本。")
         self.listWidget_verLog.addItem("V0.2.2:新增SE问题单工程师模式；可接受2000-2-2、2000/1/1和2000.1.1格式日期；更换为Qt Creator环境。")
         self.listWidget_verLog.addItem("V0.2.1:修复读取空格时间错误的BUG。")
@@ -55,14 +56,20 @@ class PyQtMED(QMainWindow, Ui_SAIC_MED):
         """循环遍历SE PPT列表，读取PPT内容"""
         self.strErrorLog = ""
         current_index = 0
+        #error_index = False  #标识此语段是否报错
         while current_index < len(self.SEPPTList):
             if not self.SEPPTList[current_index].isread:
                 if self.SEPPTList[current_index].read_problem_sheet(self.progressBar_SE,self.strErrorLog):
                     current_index += 1
                 else:
+                    #error_index = True
                     return
+        '''if error_index:
+            QMessageBox.information(None,'消息',self.strErrorLog,QMessageBox.Yes | QMessageBox.No) 
+        else:
+            QMessageBox.information(None,'消息',"导入完成。\n下一步请选择输出EXCEL模式。",QMessageBox.Yes | QMessageBox.No)'''
         QMessageBox.information(None,'消息',"导入完成。\n下一步请选择输出EXCEL模式。",QMessageBox.Yes | QMessageBox.No)
-
+                   
     """Button《保存问题Overview》响应函数"""
     def save_problem_overview(self):
         """写入相关信息"""

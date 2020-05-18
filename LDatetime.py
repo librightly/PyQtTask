@@ -12,7 +12,8 @@ class LDateTime:
     def convertDateToString(self):
         self.date_string = self.datetime.date().isoformat()
 
-    def fromString(self,date_string,style = False):
+    def fromString(self,date_string_in,style = False):
+        date_string = date_string_in.strip()
         if (style == True) and (date_string == None):
             QMessageBox.information(None,'消息','日期不能为空!',QMessageBox.Yes | QMessageBox.No)
             return

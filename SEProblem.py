@@ -64,3 +64,4 @@ class SEProblem(Task):
         self.LLR = False  #是否触发LLR，默认不触发
         self.stlye_LLR = ""  #触发LLR类型
         self.update_MR = False  #是否更新MR，默认不更新
+        self.EWO_id = ""  #此问题发起的EWO号
